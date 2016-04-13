@@ -1,0 +1,75 @@
+---
+- defaults:
+    name: global
+    git:
+      wipe-workspace: false
+      skip-tag: true
+
+- job:
+    name: jjb-parallella_linux
+    scm:
+    - git:
+        url: https://github.com/parallella/parallella-linux
+        branches:
+        - '*/main'
+        timeout: 60
+        wipe-workspace: false
+        skip-tag: true
+    builders:
+    - shell: make ARCH=arm parallella_defconfig || make ARCH=arm multi_v7_defconfig
+    - shell: make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- uImage LOADADDR=0x8000 -j8
+    - shell: make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- dtbs -j8
+    publishers:
+    - archive:
+        artifacts: '.config,arch/arm/boot/uImage,arch/arm/boot/dts/*.dtb'
+        fingerprint: true
+
+- job:
+    name: jjb-bitstreams-old
+    scm:
+    - git:
+        url: https://github.com/parallella/parallella-hw
+        branches:
+        - '*/master'
+        wipe-workspace: false
+        skip-tag: true
+    publishers:
+    - archive:
+        artifacts: 'archive/fpga/old/bitstreams/*'
+        fingerprint: true
+
+- job:
+    name: jjb-bitstreams
+    scm:
+    - git:
+        url: https://github.com/parallella/pubuntu
+        branches:
+        - '**'
+        wipe-workspace: false
+        skip-tag: true
+    publishers:
+    - archive:
+        artifacts: 'fpga_bitfiles/*'
+        fingerprint: true
+
+- job:
+    name: jjb-parallella-image
+    scm:
+    - git:
+        url: https://github.com/theappleman/armv7a-gentoo-stage4-image
+        branches: '*/master'
+        wipe-workspace: false
+        skip-tag: true
+    builders:
+    - shell: |
+            getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt | awk 'NR==3{print$1}')
+            basepath=$(basename $getpath)
+            wget -c http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/$getpath
+            ln -sf $basepath stage3-armv7a_hardfp-latest.tar.bz2
+    - copyartifact:
+        project: jjb-bitstreams
+        flatten: true
+    - copyartifact:
+        project: jjb-parallella_linux
+        flatten: true
+        filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
