@@ -74,3 +74,29 @@
     publishers:
     - archive:
         artifacts: parallella.img.bz2
+
+- job-template:
+    name: 'jjb-esdk-{branch}'
+    scm:
+    - git:
+        url: https://github.com/adapteva/epiphany-sdk
+        skip-tag: true
+        branches:
+        - '*/{branch}'
+        basedir: sdk
+    builders:
+    - shell: |
+        test -x ./sdk/download-components.sh && ./sdk/download-components.sh --clone || true
+        test -x ./sdk/download-toolchain.sh && ./sdk/download-toolchain.sh --clone || true
+        export PATH=$PATH:$PWD/builds/e-gnu/bin
+        sh -x ./sdk/build-epiphany-sdk.sh -d -R -c armv7a-hardfloat-linux-gnueabi || ./sdk/build-epiphany-sdk.sh -d -c armv7a-hardfloat-linux-gnueabi -e armv7a-hardfloat-linux-gnueabi
+    publishers:
+    - archive:
+        artifacts: 'esdk.{branch}.tar.gz'
+
+- project:
+    name: esdk-builds
+    branch:
+    - 2016.3
+    jobs:
+    - 'jjb-esdk-{branch}'
