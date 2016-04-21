@@ -53,7 +53,8 @@
     scm:
     - git:
         url: https://github.com/theappleman/armv7a-gentoo-stage4-image
-        branches: '*/master'
+        branches:
+        - '*/master'
         wipe-workspace: false
         skip-tag: true
     builders:
