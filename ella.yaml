@@ -10,12 +10,14 @@
         wipe-workspace: false
         skip-tag: true
     builders:
-    - shell: make ARCH=arm parallella_defconfig || make ARCH=arm multi_v7_defconfig
-    - shell: make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- uImage LOADADDR=0x8000 -j8
-    - shell: make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- dtbs -j8
+    - shell: |
+        make ARCH=arm parallella_defconfig || make ARCH=arm multi_v7_defconfig
+        make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- uImage LOADADDR=0x8000 -j8
+        make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- dtbs -j8
+        make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- tar-pkg -j8
     publishers:
     - archive:
-        artifacts: '.config,arch/arm/boot/uImage,arch/arm/boot/dts/*.dtb'
+        artifacts: '.config,arch/arm/boot/uImage,arch/arm/boot/dts/*.dtb,linux-*-arm.tar'
         fingerprint: true
 
 - job:
