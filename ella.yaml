@@ -1,10 +1,4 @@
 ---
-- defaults:
-    name: global
-    git:
-      wipe-workspace: false
-      skip-tag: true
-
 - job:
     name: jjb-parallella_linux
     scm:
