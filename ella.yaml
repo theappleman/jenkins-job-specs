@@ -5,8 +5,8 @@
     - git:
         url: https://github.com/parallella/parallella-linux
         branches:
-        - '*/main'
-        timeout: 60
+        - '*/parallella-linux-2016.3'
+        timeout: 600
         wipe-workspace: false
         skip-tag: true
     builders:
