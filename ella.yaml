@@ -70,3 +70,7 @@
         project: jjb-parallella_linux
         flatten: true
         filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
+    - shell: make parallella.img
+    publishers:
+    - archive:
+        artifacts: parallella.img.bz2
