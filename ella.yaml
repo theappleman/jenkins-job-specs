@@ -1,6 +1,6 @@
 ---
 - job:
-    name: jjb-parallella_linux
+    name: ella-parallella_linux
     scm:
     - git:
         url: https://github.com/parallella/parallella-linux
@@ -21,7 +21,7 @@
         fingerprint: true
 
 - job:
-    name: jjb-bitstreams-old
+    name: ella-bitstreams-old
     scm:
     - git:
         url: https://github.com/parallella/parallella-hw
@@ -35,7 +35,7 @@
         fingerprint: true
 
 - job:
-    name: jjb-bitstreams
+    name: ella-bitstreams
     scm:
     - git:
         url: https://github.com/parallella/pubuntu
@@ -49,7 +49,7 @@
         fingerprint: true
 
 - job:
-    name: jjb-parallella-image
+    name: ella-parallella-image
     scm:
     - git:
         url: https://github.com/theappleman/armv7a-gentoo-stage4-image
@@ -64,10 +64,10 @@
             wget -c http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/$getpath
             ln -sf $basepath stage3-armv7a_hardfp-latest.tar.bz2
     - copyartifact:
-        project: jjb-bitstreams
+        project: ella-bitstreams
         flatten: true
     - copyartifact:
-        project: jjb-parallella_linux
+        project: ella-parallella_linux
         flatten: true
         filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
     - shell: make parallella.img
@@ -76,7 +76,7 @@
         artifacts: parallella.img.bz2
 
 - job-template:
-    name: 'jjb-esdk-{branch}'
+    name: 'ella-esdk-{branch}'
     scm:
     - git:
         url: https://github.com/adapteva/epiphany-sdk
@@ -99,4 +99,4 @@
     branch:
     - 2016.3
     jobs:
-    - 'jjb-esdk-{branch}'
+    - 'ella-esdk-{branch}'
