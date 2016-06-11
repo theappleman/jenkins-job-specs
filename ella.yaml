@@ -60,8 +60,18 @@
         branches:
         - '*/master'
         skip-tag: true
+    parameters:
+    - file:
+        name: ssh-keys
     builders:
     - shell: |
+            test -f ssh-keys && {
+                mkdir -p stage4/root/.ssh
+                chmod 700 stage4/root/.ssh
+                touch stage4/root/.ssh/authorized_keys
+                chmod 600 stage4/root/.ssh/authorized_keys
+                cp ssh-keys stage4/root/.ssh/authorized_keys
+            }
             getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt | awk 'NR==3{print$1}')
             basepath=$(basename $getpath)
             wget -c http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/$getpath
