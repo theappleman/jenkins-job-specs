@@ -111,6 +111,7 @@
 
 - project:
     name: esdk-builds
+    node: gentoo && linux && user
     branch:
     - 2016.3
     jobs:
