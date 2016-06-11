@@ -72,6 +72,7 @@
                 chmod 600 stage4/root/.ssh/authorized_keys
                 cp ssh-keys stage4/root/.ssh/authorized_keys
             }
+            mkdir -p stage4/opt/adapteva
             getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt | awk 'NR==3{print$1}')
             basepath=$(basename $getpath)
             wget -c http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/$getpath
@@ -83,7 +84,12 @@
         project: ella-parallella_linux
         flatten: true
         filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
-    - shell: make parallella.img
+    - copyartifact:
+        project: ella-esdk-2016.3
+        flatten: true
+    - shell: |
+        tar xf esdk.*.tar.gz -C stage4/opt/adapteva
+        make
     publishers:
     - archive:
         artifacts: parallella.img.bz2
