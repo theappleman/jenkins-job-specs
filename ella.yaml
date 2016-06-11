@@ -106,7 +106,8 @@
         sh -x ./sdk/build-epiphany-sdk.sh -d -R -c armv7a-hardfloat-linux-gnueabi || ./sdk/build-epiphany-sdk.sh -d -c armv7a-hardfloat-linux-gnueabi -e armv7a-hardfloat-linux-gnueabi
     publishers:
     - archive:
-        artifacts: 'esdk.{branch}.tar.gz'
+        artifacts: 'esdk.{branch}*.tar.gz'
+        fingerprint: true
 
 - project:
     name: esdk-builds
