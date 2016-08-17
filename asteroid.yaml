@@ -157,8 +157,7 @@
         - 'asteroid-kernel-{kernel}-{watch}'
         watch:
         - dory
-        - bass:
-            github: theappleman
+        - bass
         - tetra:
             kernel: bcm
         - sparrow:
