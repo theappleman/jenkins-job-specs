@@ -20,7 +20,10 @@
         - cx: { proj: meta-smartphone }
         - cx: { proj: meta-qt5 }
         - cx: { proj: meta-asteroid }
-        - cx: { proj: 'meta-{watch}-hybris' }
+        - cx: { proj: 'meta-bass-hybris' }
+        - cx: { proj: 'meta-dory-hybris' }
+        - cx: { proj: 'meta-tetra-hybris' }
+        - cx: { proj: 'meta-sparrow-hybris' }
         - copyextract:
             proj: asteroid-bitbake
             path: oe-core/bitbake
@@ -128,10 +131,10 @@
         repo:
         - oe-core:
             url: git://git.openembedded.org/openembedded-core
-            branch: '*/jethro'
+            branch: '*/krogoth'
         - meta-openembedded:
             url: https://github.com/openembedded/meta-openembedded.git
-            branch: '*/jethro'
+            branch: '*/krogoth'
         - meta-smartphone:
             url: https://github.com/shr-distribution/meta-smartphone
             branch: '*/krogoth'
@@ -140,7 +143,7 @@
             branch: '*/krogoth'
         - bitbake:
             url: git://git.openembedded.org/bitbake
-            branch: '*/1.28'
+            branch: '*/1.30'
         - meta-asteroid:
             url: https://github.com/AsteroidOS/meta-asteroid
             branch: '*/master'
