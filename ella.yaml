@@ -64,15 +64,6 @@
     - file:
         name: ssh-keys
     builders:
-    - shell: |
-            test -f ssh-keys && {
-                mkdir -p stage4/root/.ssh
-                chmod 700 stage4/root/.ssh
-                touch stage4/root/.ssh/authorized_keys
-                chmod 600 stage4/root/.ssh/authorized_keys
-                cp ssh-keys stage4/root/.ssh/authorized_keys
-            }
-            mkdir -p stage4/opt/adapteva
     - copyartifact:
         project: ella-bitstreams
         flatten: true
@@ -87,6 +78,14 @@
         project: ella-gentoo-stage3
         flatten: true
     - shell: |
+        test -f ssh-keys && {
+            mkdir -p stage4/root/.ssh
+            chmod 700 stage4/root/.ssh
+            touch stage4/root/.ssh/authorized_keys
+            chmod 600 stage4/root/.ssh/authorized_keys
+            cp ssh-keys stage4/root/.ssh/authorized_keys
+        }
+        mkdir -p stage4/opt/adapteva
         tar xf esdk.*.tar.gz -C stage4/opt/adapteva
         make
     publishers:
@@ -148,15 +147,6 @@
         - 'origin/pr/*/head'
         skip-tag: true
     builders:
-    - shell: |
-            test -f ssh-keys && {
-                mkdir -p stage4/root/.ssh
-                chmod 700 stage4/root/.ssh
-                touch stage4/root/.ssh/authorized_keys
-                chmod 600 stage4/root/.ssh/authorized_keys
-                cp ssh-keys stage4/root/.ssh/authorized_keys
-            }
-            mkdir -p stage4/opt/adapteva
     - copyartifact:
         project: ella-bitstreams
         flatten: true
@@ -170,6 +160,14 @@
     - copyartifact:
         project: ella-gentoo-stage3
     - shell: |
+        test -f ssh-keys && {
+            mkdir -p stage4/root/.ssh
+            chmod 700 stage4/root/.ssh
+            touch stage4/root/.ssh/authorized_keys
+            chmod 600 stage4/root/.ssh/authorized_keys
+            cp ssh-keys stage4/root/.ssh/authorized_keys
+        }
+        mkdir -p stage4/opt/adapteva
         tar xf esdk.*.tar.gz -C stage4/opt/adapteva
         make
     publishers:
