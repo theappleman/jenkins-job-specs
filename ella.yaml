@@ -68,7 +68,7 @@
     - copyartifact:
         project: ella-parallella_linux
         flatten: true
-        filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
+        filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*.dtb"
     - copyartifact:
         project: ella-esdk-2016.11
         flatten: true
