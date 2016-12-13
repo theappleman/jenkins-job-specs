@@ -6,6 +6,7 @@
         url: https://github.com/parallella/parallella-linux
         branches:
         - '*/parallella-linux-2016.3'
+        - '*/parallella-linux-2016.11'
         timeout: 600
         wipe-workspace: false
         skip-tag: true
@@ -69,7 +70,7 @@
         flatten: true
         filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*-headless.dtb"
     - copyartifact:
-        project: ella-esdk-2016.3
+        project: ella-esdk-2016.11
         flatten: true
     - copyartifact:
         project: ella-gentoo-stage3
@@ -126,5 +127,6 @@
     name: esdk-builds
     branch:
     - 2016.3
+    - 2016.11
     jobs:
     - 'ella-esdk-{branch}'
