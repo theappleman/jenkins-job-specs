@@ -50,8 +50,17 @@
         artifacts: 'fpga_bitfiles/*'
         fingerprint: true
 
-- job:
-    name: ella-parallella-image
+- project:
+    name: 'ella-parallella-images'
+    jobs:
+    - 'ella-parallella-image-{version}'
+    version:
+    - microserver
+    - headless
+    - hdmi
+
+- job-template:
+    name: 'ella-parallella-image-{version}'
     scm:
     - git:
         url: https://github.com/theappleman/armv7a-gentoo-stage4-image
@@ -85,7 +94,9 @@
         }}
         mkdir -p stage4/opt/adapteva
         tar xf esdk.*.tar.gz -C stage4/opt/adapteva
-        make
+        cp -v parallella_e16_headless_gpiose_7010.bit.bin parallella_e16_microserver_gpiose_7010.bit.bin
+        cp -v zynq-parallella.dtb zynq-parallella-hdmi.dtb
+        make VERSION={version}
     publishers:
     - archive:
         artifacts: parallella.img.bz2
