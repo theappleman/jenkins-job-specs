@@ -1,0 +1,28 @@
+---
+- job-template:
+    name: 'ella-esdk-{branch}'
+    scm:
+    - git:
+        url: https://github.com/theappleman/epiphany-sdk
+        skip-tag: true
+        branches:
+        - '*/{branch}'
+        basedir: sdk
+    builders:
+    - shell: |
+        test -x ./sdk/download-components.sh && ./sdk/download-components.sh --clone || true
+        test -x ./sdk/download-toolchain.sh && ./sdk/download-toolchain.sh --clone || true
+        export PATH=$PATH:$PWD/builds/e-gnu/bin
+        sh -x ./sdk/build-epiphany-sdk.sh -d -R -c armv7a-hardfloat-linux-gnueabi || ./sdk/build-epiphany-sdk.sh -d -c armv7a-hardfloat-linux-gnueabi -e armv7a-hardfloat-linux-gnueabi
+    publishers:
+    - archive:
+        artifacts: 'esdk.{branch}*.tar.gz'
+        fingerprint: true
+
+- project:
+    name: esdk-builds
+    branch:
+    - 2016.3
+    - 2016.11
+    jobs:
+    - 'ella-esdk-{branch}'
