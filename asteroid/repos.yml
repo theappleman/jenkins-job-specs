@@ -1,0 +1,58 @@
+---
+- project:
+        name: meta-asteroid-repos
+        repo:
+        - oe-core:
+            url: git://git.openembedded.org/openembedded-core
+            branch: '*/krogoth'
+        - meta-openembedded:
+            url: https://github.com/openembedded/meta-openembedded.git
+            branch: '*/krogoth'
+        - meta-smartphone:
+            url: https://github.com/shr-distribution/meta-smartphone
+            branch: '*/krogoth'
+        - meta-qt5:
+            url: https://github.com/meta-qt5/meta-qt5.git
+            branch: '*/krogoth'
+        - bitbake:
+            url: git://git.openembedded.org/bitbake
+            branch: '*/1.30'
+        - meta-asteroid:
+            url: https://github.com/AsteroidOS/meta-asteroid
+            branch: '*/master'
+        jobs:
+        - 'asteroid-{repo}'
+
+- job-template:
+        name: 'asteroid-{repo}'
+        scm:
+        - git:
+            clean:
+              before: true
+            url: '{url}'
+            branches:
+            - '{branch}'
+            skip-tag: true
+        builders:
+        - shell: |
+            tempfile=$(mktemp)
+            tar cf $tempfile .
+            cp $tempfile $BUILD_TAG.tar
+        publishers:
+        - archive:
+            artifacts: "*.tar"
+            fingerprint: true
+        - downstream-ext:
+            projects:
+            - asteroid-image-dory
+            - asteroid-image-bass
+            - asteroid-image-tetra
+            - asteroid-image-sparrow
+            only-on-local-scm-change: true
+        properties:
+        - copyartifact:
+            projects: asteroid-image-*
+        triggers:
+        - pollscm:
+            cron: "H H * * *"
+

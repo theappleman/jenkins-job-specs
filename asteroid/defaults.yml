@@ -1,0 +1,7 @@
+---
+- defaults:
+    name: global
+    github: AsteroidOS
+    kernel: msm
+    android: lollipop
+

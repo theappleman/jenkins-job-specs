@@ -1,0 +1,31 @@
+---
+- job-template:
+        name: 'asteroid-meta-{watch}-hybris'
+        scm:
+        - git:
+            clean:
+              before: true
+            url: 'https://github.com/{github}/meta-{watch}-hybris'
+            branches:
+            - '*/master'
+            skip-tag: true
+        builders:
+        - shell: |
+            tempfile=$(mktemp)
+            tar cf $tempfile .
+            cp $tempfile $BUILD_TAG.tar
+        publishers:
+        - archive:
+            artifacts: "*.tar"
+            fingerprint: true
+        - downstream-ext:
+            projects:
+            - asteroid-image-{watch}
+            only-on-local-scm-change: true
+        properties:
+        - copyartifact:
+            projects: asteroid-image-{watch}
+        triggers:
+        - pollscm:
+            cron: "H H * * *"
+

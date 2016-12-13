@@ -1,0 +1,76 @@
+---
+- project:
+        name: asteroid-images
+        jobs:
+        - 'asteroid-image-{watch}'
+        - 'asteroid-meta-{watch}-hybris'
+        - 'asteroid-kernel-{kernel}-{watch}'
+        watch:
+        - dory
+        - bass
+        - tetra:
+            kernel: bcm
+        - sparrow:
+            android: marshmallow
+
+- builder:
+    name: copyextract
+    builders:
+    - copyartifact:
+        project: '{proj}'
+    - shell: |
+        mkdir -p src/{path}
+        tar xf jenkins-{proj}-*.tar -C src/{path}
+
+- builder:
+    name: cx
+    builders:
+    - copyextract:
+        proj: 'asteroid-{proj}'
+        path: '{proj}'
+
+- job-template:
+        name: 'asteroid-image-{watch}'
+        scm:
+        - git:
+            url: https://github.com/AsteroidOS/asteroid
+            branches:
+            - '*/master'
+            skip-tag: true
+            wipe-workspace: false
+        builders:
+        - shell: |
+            rm -f '*.tar'
+            rm -fr build/
+        - cx: { proj: oe-core }
+        - cx: { proj: meta-openembedded }
+        - cx: { proj: meta-smartphone }
+        - cx: { proj: meta-qt5 }
+        - cx: { proj: meta-asteroid }
+        - cx: { proj: 'meta-bass-hybris' }
+        - cx: { proj: 'meta-dory-hybris' }
+        - cx: { proj: 'meta-tetra-hybris' }
+        - cx: { proj: 'meta-sparrow-hybris' }
+        - copyextract:
+            proj: asteroid-bitbake
+            path: oe-core/bitbake
+        - shell: |
+            . ./prepare-build.sh {watch}
+            bitbake asteroid-image
+            bitbake meta-toolchain-qt5
+        publishers:
+        - archive:
+            artifacts: 'build/tmp-glibc/deploy/images/{watch}/*,build/tmp-glibc/deploy/sdk/*'
+            fingerprint: true
+        triggers:
+        - reverse:
+            jobs:
+            - asteroid-oe-core
+            - asteroid-bitbake
+            - asteroid-meta-asteroid
+            - asteroid-meta-{watch}-hybris
+            - asteroid-meta-openembedded
+            - asteroid-meta-qt5
+            - asteroid-meta-smartphone
+            result: success
+

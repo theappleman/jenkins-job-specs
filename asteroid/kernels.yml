@@ -1,0 +1,17 @@
+---
+- job-template:
+    name: asteroid-kernel-{kernel}-{watch}
+    scm:
+    - git:
+        url: https://android.googlesource.com/kernel/{kernel}
+        branches:
+        - '*/android-{kernel}-{watch}-3.10-{android}-mr1-wear-release'
+        skip-tag: true
+        timeout: 60
+    builders:
+    - shell: make ARCH=arm {watch}_defconfig
+    publishers:
+    - archive:
+        artifacts: .config
+        fingerprint: true
+
