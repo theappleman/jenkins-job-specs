@@ -1,7 +1,6 @@
 ---
 - job:
     name: ella-parallella_linux
-    node: gentoo && linux && user
     scm:
     - git:
         url: https://github.com/parallella/parallella-linux
@@ -23,7 +22,6 @@
 
 - job:
     name: ella-bitstreams-old
-    node: gentoo && linux && user
     scm:
     - git:
         url: https://github.com/parallella/parallella-hw
@@ -38,7 +36,6 @@
 
 - job:
     name: ella-bitstreams
-    node: gentoo && linux && user
     scm:
     - git:
         url: https://github.com/parallella/pubuntu
@@ -53,7 +50,6 @@
 
 - job:
     name: ella-parallella-image
-    node: gentoo && linux && user
     scm:
     - git:
         url: https://github.com/theappleman/armv7a-gentoo-stage4-image
@@ -94,7 +90,6 @@
 
 - job:
     name: ella-gentoo-stage3
-    node: gentoo && linux && user
     builders:
     - shell: |
             getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt | awk 'NR==3{print$1}')
@@ -108,7 +103,6 @@
 
 - job-template:
     name: 'ella-esdk-{branch}'
-    node: gentoo && linux && user
     scm:
     - git:
         url: https://github.com/theappleman/epiphany-sdk
@@ -129,7 +123,6 @@
 
 - project:
     name: esdk-builds
-    node: gentoo && linux && user
     branch:
     - 2016.3
     jobs:
