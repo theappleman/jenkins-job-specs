@@ -17,7 +17,7 @@
         make ARCH=arm CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi- tar-pkg -j8
     publishers:
     - archive:
-        artifacts: '.config,arch/arm/boot/uImage,arch/arm/boot/dts/*.dtb,linux-*-arm.tar'
+        artifacts: '.config,arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*.dtb,linux-*-arm.tar'
         fingerprint: true
 
 - job:
