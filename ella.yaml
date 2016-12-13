@@ -3,8 +3,8 @@
 
 - include: ella/bitstream.yml
 
-- include: ella/image.yml
-
 - include: ella/gentoo.yml
 
 - include: ella/esdk.yml
+
+- include: ella/image.yml
