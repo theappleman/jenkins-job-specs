@@ -1,0 +1,51 @@
+---
+- project:
+    name: 'ella-parallella-images'
+    jobs:
+    - 'ella-parallella-image-{version}'
+    version:
+    - microserver
+    - headless
+    - hdmi
+
+- job-template:
+    name: 'ella-parallella-image-{version}'
+    scm:
+    - git:
+        url: https://github.com/theappleman/armv7a-gentoo-stage4-image
+        branches:
+        - '*/master'
+        skip-tag: true
+    parameters:
+    - file:
+        name: ssh-keys
+    builders:
+    - copyartifact:
+        project: ella-bitstreams
+        flatten: true
+    - copyartifact:
+        project: ella-parallella_linux
+        flatten: true
+        filter: "arch/arm/boot/uImage,arch/arm/boot/dts/zynq-parallella*.dtb"
+    - copyartifact:
+        project: ella-esdk-2016.11
+        flatten: true
+    - copyartifact:
+        project: ella-gentoo-stage3
+        flatten: true
+    - shell: |
+        test -f ssh-keys && {{
+            mkdir -p stage4/root/.ssh
+            chmod 700 stage4/root/.ssh
+            touch stage4/root/.ssh/authorized_keys
+            chmod 600 stage4/root/.ssh/authorized_keys
+            cp ssh-keys stage4/root/.ssh/authorized_keys
+        }}
+        mkdir -p stage4/opt/adapteva
+        tar xf esdk.*.tar.gz -C stage4/opt/adapteva
+        cp -v parallella_e16_headless_gpiose_7010.bit.bin parallella_e16_microserver_gpiose_7010.bit.bin
+        cp -v zynq-parallella.dtb zynq-parallella-hdmi.dtb
+        make VERSION={version}
+    publishers:
+    - archive:
+        artifacts: parallella.img.bz2
