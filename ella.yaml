@@ -1,34 +1,7 @@
 ---
 - include: ella/linux.yml
 
-- job:
-    name: ella-bitstreams-old
-    disabled: true
-    scm:
-    - git:
-        url: https://github.com/parallella/parallella-hw
-        branches:
-        - '*/master'
-        wipe-workspace: false
-        skip-tag: true
-    publishers:
-    - archive:
-        artifacts: 'archive/fpga/old/bitstreams/*'
-        fingerprint: true
-
-- job:
-    name: ella-bitstreams
-    scm:
-    - git:
-        url: https://github.com/parallella/pubuntu
-        branches:
-        - '**'
-        wipe-workspace: false
-        skip-tag: true
-    publishers:
-    - archive:
-        artifacts: 'fpga_bitfiles/*'
-        fingerprint: true
+- include: ella/bitstream.yml
 
 - project:
     name: 'ella-parallella-images'
