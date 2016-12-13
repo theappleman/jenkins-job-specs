@@ -18,7 +18,7 @@
     name: ella-bitstreams
     scm:
     - git:
-        url: https://github.com/parallella/pubuntu
+        url: https://github.com/parallella/parabuntu
         branches:
         - '**'
         wipe-workspace: false
