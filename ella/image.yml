@@ -1,15 +1,27 @@
 ---
 - project:
-    name: 'ella-parallella-images'
+    name: 'ella-parallella-images-7010'
     jobs:
-    - 'ella-parallella-image-{version}'
+    - 'ella-parallella-image-{version}-{zynq}'
     version:
     - microserver
     - headless
     - hdmi
+    zynq:
+    - 7010
+
+- project:
+    name: 'ella-parallella-images-7020'
+    jobs:
+    - 'ella-parallella-image-{version}-{zynq}'
+    version:
+    - headless
+    - hdmi
+    zynq:
+    - 7020
 
 - job-template:
-    name: 'ella-parallella-image-{version}'
+    name: 'ella-parallella-image-{version}-{zynq}'
     scm:
     - git:
         url: https://github.com/theappleman/armv7a-gentoo-stage4-image
@@ -45,8 +57,8 @@
         tar xf esdk.*.tar.gz -C stage4/opt/adapteva
         cp -v parallella_e16_headless_gpiose_7010.bit.bin parallella_e16_microserver_gpiose_7010.bit.bin
         cp -v zynq-parallella.dtb zynq-parallella-hdmi.dtb
-        make VERSION={version}
+        make VERSION={version} ZYNQ={zynq} parallella-{version}-{zynq}.img.bz2
         rm -f ssh-keys stage4/root/.ssh/authorized_keys
     publishers:
     - archive:
-        artifacts: parallella.img.bz2
+        artifacts: parallella-{version}-{zynq}.img.bz2
