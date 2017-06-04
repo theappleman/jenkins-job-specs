@@ -10,10 +10,8 @@
         basedir: sdk
     builders:
     - shell: |
-        test -x ./sdk/download-components.sh && ./sdk/download-components.sh --clone || true
-        test -x ./sdk/download-toolchain.sh && ./sdk/download-toolchain.sh --clone || true
-        export PATH=$PATH:$PWD/builds/e-gnu/bin
-        sh -x ./sdk/build-epiphany-sdk.sh -d -R -c armv7a-hardfloat-linux-gnueabi || ./sdk/build-epiphany-sdk.sh -d -c armv7a-hardfloat-linux-gnueabi -e armv7a-hardfloat-linux-gnueabi
+        test -x ./sdk/download-components.sh && ./sdk/download-components.sh || true
+        sh -x ./sdk/build-epiphany-sdk.sh -c armv7a-hardfloat-linux-gnueabi -e armv7a-hardfloat-linux-gnueabi
     publishers:
     - archive:
         artifacts: 'esdk.{branch}*.tar.gz'
