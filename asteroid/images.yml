@@ -6,12 +6,18 @@
         - 'asteroid-meta-{watch}-hybris'
         - 'asteroid-kernel-{kernel}-{watch}'
         watch:
-        - dory
+        - anthias
         - bass
-        - tetra:
-            kernel: bcm
+        - dory
+        - lenok
         - sparrow:
             android: marshmallow
+        - sprat
+        - sturgeon
+        - swift
+        - tetra:
+            kernel: bcm
+        - wren
 
 - builder:
     name: copyextract
@@ -47,10 +53,15 @@
         - cx: { proj: meta-smartphone }
         - cx: { proj: meta-qt5 }
         - cx: { proj: meta-asteroid }
+        - cx: { proj: 'meta-anthias-hybris' }
         - cx: { proj: 'meta-bass-hybris' }
         - cx: { proj: 'meta-dory-hybris' }
-        - cx: { proj: 'meta-tetra-hybris' }
         - cx: { proj: 'meta-sparrow-hybris' }
+        - cx: { proj: 'meta-sprat-hybris' }
+        - cx: { proj: 'meta-sturgeon-hybris' }
+        - cx: { proj: 'meta-swift-hybris' }
+        - cx: { proj: 'meta-tetra-hybris' }
+        - cx: { proj: 'meta-wren-hybris' }
         - copyextract:
             proj: asteroid-bitbake
             path: oe-core/bitbake
