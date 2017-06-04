@@ -46,6 +46,7 @@
         cp -v parallella_e16_headless_gpiose_7010.bit.bin parallella_e16_microserver_gpiose_7010.bit.bin
         cp -v zynq-parallella.dtb zynq-parallella-hdmi.dtb
         make VERSION={version}
+        rm -f ssh-keys stage4/root/.ssh/authorized_keys
     publishers:
     - archive:
         artifacts: parallella.img.bz2
