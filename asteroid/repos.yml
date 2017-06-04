@@ -4,19 +4,19 @@
         repo:
         - oe-core:
             url: git://git.openembedded.org/openembedded-core
-            branch: '*/krogoth'
+            branch: '*/morty'
         - meta-openembedded:
             url: https://github.com/openembedded/meta-openembedded.git
-            branch: '*/krogoth'
+            branch: '*/morty'
         - meta-smartphone:
             url: https://github.com/shr-distribution/meta-smartphone
-            branch: '*/krogoth'
+            branch: '*/morty'
         - meta-qt5:
             url: https://github.com/meta-qt5/meta-qt5.git
-            branch: '*/krogoth'
+            branch: '*/master'
         - bitbake:
             url: git://git.openembedded.org/bitbake
-            branch: '*/1.30'
+            branch: '*/1.32'
         - meta-asteroid:
             url: https://github.com/AsteroidOS/meta-asteroid
             branch: '*/master'
