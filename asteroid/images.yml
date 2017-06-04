@@ -67,6 +67,8 @@
             path: oe-core/bitbake
         - shell: |
             . ./prepare-build.sh {watch}
+            export PARALLEL_MAKE="-j2"
+            export BB_NUMBER_THREADS=2
             bitbake asteroid-image
             bitbake meta-toolchain-qt5
         publishers:
