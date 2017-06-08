@@ -11,3 +11,16 @@
     - archive:
         artifacts: stage3-armv7a_hardfp-*.tar.bz2
         fingerprint: true
+
+- job:
+    name: gentoo-armv6j-stage3
+    builders:
+    - shell: |
+            getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv6j_hardfp.txt | awk 'NR==3{print$1}')
+            basepath=$(basename $getpath)
+            wget -c http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/$getpath
+            ln -sf $basepath stage3-armv6j_hardfp-latest.tar.bz2
+    publishers:
+    - archive:
+        artifacts: stage3-armv6j_hardfp-*.tar.bz2
+        fingerprint: true
