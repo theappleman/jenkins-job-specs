@@ -1,6 +1,6 @@
 ---
 - job:
-    name: ella-gentoo-stage3
+    name: gentoo-armv7a-stage3
     builders:
     - shell: |
             getpath=$(wget -q -O- http://${2:-distfiles.gentoo.org}/releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt | awk 'NR==3{print$1}')

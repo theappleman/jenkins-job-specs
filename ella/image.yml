@@ -43,7 +43,7 @@
         project: ella-esdk-2016.11
         flatten: true
     - copyartifact:
-        project: ella-gentoo-stage3
+        project: gentoo-armv7a-stage3
         flatten: true
     - shell: |
         test -f ssh-keys && {{
