@@ -46,7 +46,7 @@
             wipe-workspace: false
         builders:
         - shell: |
-            rm -f '*.tar'
+            rm -f *.tar
             rm -fr build/
         - cx: { proj: oe-core }
         - cx: { proj: meta-openembedded }
