@@ -3,20 +3,20 @@
         name: meta-asteroid-repos
         repo:
         - oe-core:
-            url: git://git.openembedded.org/openembedded-core
-            branch: '*/morty'
+            url: https://github.com/openembedded/openembedded-core.git
+            branch: '*/pyro'
         - meta-openembedded:
             url: https://github.com/openembedded/meta-openembedded.git
-            branch: '*/morty'
+            branch: '*/pyro'
         - meta-smartphone:
             url: https://github.com/shr-distribution/meta-smartphone
-            branch: '*/morty'
+            branch: '*/pyro'
         - meta-qt5:
-            url: https://github.com/meta-qt5/meta-qt5.git
-            branch: '*/master'
+            url: https://code.qt.io/yocto/meta-qt5.git
+            branch: '*/5.9'
         - bitbake:
-            url: git://git.openembedded.org/bitbake
-            branch: '*/1.32'
+            url: https://github.com/openembedded/bitbake.git
+            branch: '*/1.34'
         - meta-asteroid:
             url: https://github.com/AsteroidOS/meta-asteroid
             branch: '*/master'
