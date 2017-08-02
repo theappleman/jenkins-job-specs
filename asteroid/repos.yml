@@ -44,10 +44,16 @@
             fingerprint: true
         - downstream-ext:
             projects:
-            - asteroid-image-dory
+            - asteroid-image-anthias
             - asteroid-image-bass
-            - asteroid-image-tetra
+            - asteroid-image-dory
+            - asteroid-image-lenok
             - asteroid-image-sparrow
+            - asteroid-image-sprat
+            - asteroid-image-sturgeon
+            - asteroid-image-swift
+            - asteroid-image-tetra
+            - asteroid-image-wren
             only-on-local-scm-change: true
         properties:
         - copyartifact:
