@@ -56,6 +56,7 @@
         - cx: { proj: 'meta-anthias-hybris' }
         - cx: { proj: 'meta-bass-hybris' }
         - cx: { proj: 'meta-dory-hybris' }
+        - cx: { proj: 'meta-lenok-hybris' }
         - cx: { proj: 'meta-sparrow-hybris' }
         - cx: { proj: 'meta-sprat-hybris' }
         - cx: { proj: 'meta-sturgeon-hybris' }
